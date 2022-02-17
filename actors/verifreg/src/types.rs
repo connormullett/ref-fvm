@@ -10,7 +10,7 @@ use num_traits::FromPrimitive;
 
 #[cfg(not(feature = "devnet"))]
 lazy_static! {
-    pub static ref MINIMUM_VERIFIED_DEAL_SIZE: StoragePower = StoragePower::from_i32(1 << 20).unwrap(); // placeholder
+    pub static ref MINIMUM_VERIFIED_DEAL_SIZE: StoragePower = StoragePower::from_i32(256).unwrap(); // placeholder
 }
 
 #[cfg(feature = "devnet")]

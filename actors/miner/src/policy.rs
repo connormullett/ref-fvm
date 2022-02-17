@@ -36,7 +36,8 @@ pub const EXPIRED_PRE_COMMIT_CLEAN_UP_DELAY: i64 = 8 * EPOCHS_IN_HOUR;
 /// The period over which all a miner's active sectors will be challenged.
 pub const WPOST_PROVING_PERIOD: ChainEpoch = EPOCHS_IN_DAY;
 /// The duration of a deadline's challenge window, the period before a deadline when the challenge is available.
-pub const WPOST_CHALLENGE_WINDOW: ChainEpoch = 30 * 60 / EPOCH_DURATION_SECONDS; // Half an hour (=48 per day)
+pub const WPOST_CHALLENGE_WINDOW: ChainEpoch = 30 * 60 / EPOCH_DURATION_SECONDS;
+// Half an hour (=48 per day)
 /// The number of non-overlapping PoSt deadlines in each proving period.
 pub const WPOST_PERIOD_DEADLINES: u64 = 48;
 /// The maximum distance back that a valid Window PoSt must commit to the current chain.
@@ -172,7 +173,7 @@ pub const MAX_PRE_COMMIT_RANDOMNESS_LOOKBACK: ChainEpoch = EPOCHS_IN_DAY + CHAIN
 /// Number of epochs between publishing the precommit and when the challenge for interactive PoRep is drawn
 /// used to ensure it is not predictable by miner.
 #[cfg(not(feature = "devnet"))]
-pub const PRE_COMMIT_CHALLENGE_DELAY: ChainEpoch = 150;
+pub const PRE_COMMIT_CHALLENGE_DELAY: ChainEpoch = 10;
 #[cfg(feature = "devnet")]
 pub const PRE_COMMIT_CHALLENGE_DELAY: ChainEpoch = 10;
 
@@ -269,11 +270,15 @@ pub fn qa_power_for_sector(size: SectorSize, sector: &SectorOnChainInfo) -> Stor
 pub fn sector_deals_max(size: SectorSize) -> u64 {
     cmp::max(256, size as u64 / DEAL_LIMIT_DENOMINATOR)
 }
+
 /// Specification for a linear vesting schedule.
 pub struct VestSpec {
-    pub initial_delay: ChainEpoch, // Delay before any amount starts vesting.
-    pub vest_period: ChainEpoch, // Period over which the total should vest, after the initial delay.
-    pub step_duration: ChainEpoch, // Duration between successive incremental vests (independent of vesting period).
+    pub initial_delay: ChainEpoch,
+    // Delay before any amount starts vesting.
+    pub vest_period: ChainEpoch,
+    // Period over which the total should vest, after the initial delay.
+    pub step_duration: ChainEpoch,
+    // Duration between successive incremental vests (independent of vesting period).
     pub quantization: ChainEpoch, // Maximum precision of vesting table (limits cardinality of table).
 }
 
